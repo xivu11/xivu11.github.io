@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LOGIN PAGE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            var em = getElementById("exampleInputEmail1");
+            var pass = getElementById("exampleInputPassword1");
+            if (em.value.trim() == "" || pass.value.trim() == "") {
+                alert("No blank values allowed");
+                return false;
+            } else {
+                if (pass1.value.length < 6) {
+                    alert("Password must be atleast 6 characters long.");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <form action="submitMessage.html" onsubmit="return validate()">
+        <div class="card container w-25 mt-5">
+            <h5 class="card-header">Login</h5>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address :</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password :</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </div>
+            <div class="card-footer">
+                <p>Don't have an account? <a href="index2.html">Create an account</a></p>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>
