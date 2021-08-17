@@ -29,7 +29,7 @@
 </head>
 
 <body>
-    <form action="submitMessage.html" onsubmit="return validate()">
+    <form action="submitMessage.html" id="login">
         <div class="card container w-25 mt-5">
             <h5 class="card-header">Login</h5>
             <div class="card-body">
@@ -48,6 +48,42 @@
             </div>
         </div>
     </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+    <script>
+        jQuery.validator.addMethod("nospace", function(value, element) {
+            return value.trim().length != 0;
+        }, "No Spaces allowed!");
+        jQuery.validator.addMethod("passlen", function(value, element) {
+            return value.length >= 6;
+        }, "Password must contain atleast 6 characters.");
+        var $form = $('#login');
+        if ($form.length) {
+            $form.validate({
+                rules: {
+                    exampleInputEmail1: {
+                        required: true,
+                        nospace: true,
+                        email: true
+                    },
+                    exampleInputPassword1: {
+                        required: true,
+                        nospace: true,
+                        passlen: true
+                    }
+                },
+                messages: {
+                    exampleInputEmail1: {
+                        required: 'Email is required!',
+                        email: 'Please enter a valid email!'
+                    },
+                    exampleInputPassword1: {
+                        required: 'Password is required!'
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
