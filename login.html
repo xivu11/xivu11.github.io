@@ -9,23 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script>
-        function validate() {
-            var em = getElementById("exampleInputEmail1");
-            var pass = getElementById("exampleInputPassword1");
-            if (em.value.trim() == "" || pass.value.trim() == "") {
-                alert("No blank values allowed");
-                return false;
-            } else {
-                if (pass1.value.length < 6) {
-                    alert("Password must be atleast 6 characters long.");
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -48,7 +31,6 @@
             </div>
         </div>
     </form>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
     <script>
         jQuery.validator.addMethod("nospace", function(value, element) {
