@@ -6,73 +6,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script>
-        function validate() {
-            var fn = document.getElementById("fname");
-            var ln = document.getElementById("lname");
-            var pass1 = document.getElementById("exampleInputPassword1");
-            var pass2 = document.getElementById("cpwd");
-            var em = document.getElementById("exampleInputEmail1");
-            var dt = document.getElementById("dob");
-            if (fn.value.trim() == "" || ln.value.trim() == "" || pass1.value.trim() == "" || pass2.value.trim() == "" || em.value.trim() == "" || dt.value.trim() == "") {
-                alert("No blank values allowed");
-                return false;
-            } else {
-                if (pass1.value != pass2.value) {
-                    alert("Passwords must be same!");
-                    return false;
-                } else {
-                    if (dt.value > "2000-12-31") {
-                        alert("Date of birth invalid!")
-                        return false;
-                    } else {
-                        if (pass1.value.length < 6) {
-                            alert("Password must be atleast 6 characters long.");
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 
 <body>
-    <form onsubmit="return validate()" action="submitMessage.html">
+    <form id="signupform" action="submitMessage.html">
         <div class="card container w-25 mt-5">
             <h5 class="card-header">Signup</h5>
             <div class="card-body">
                 <div class="mb-3">
                     <label for="fname" class="form-label">First Name :</label>
                     <input type="text" class="form-control" id="fname">
+                    <span class="error_form" id="fnem"></span>
                 </div>
                 <div class="mb-3">
                     <label for="lname" class="form-label">Last Name :</label>
                     <input type="text" class="form-control" id="lname">
+                    <span class="error_form" id="lnem"></span>
                 </div>
                 <div class="mb-3">
                     <label for="dob" class="form-label">Date Of Birth :</label>
                     <input type="date" class="form-control" id="dob">
+                    <span class="error_form" id="dobem"></span>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address :</label>
                     <input type="email" class="form-control" id="exampleInputEmail1">
+                    <span class="error_form" id="emailem"></span>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password :</label>
                     <input type="password" class="form-control" id="exampleInputPassword1">
+                    <span class="error_form" id="pwdem"></span>
                 </div>
                 <div class="mb-3">
                     <label for="cpwd" class="form-label">Confirm Password :</label>
                     <input type="password" class="form-control" id="cpwd">
-                    <div class="invalid-feedback">
-                        <p id="cp"></p>
-                    </div>
+                    <span class="error_form" id="cpwdem"></span>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Register</button>
             </div>
@@ -81,6 +50,144 @@
             </div>
         </div>
     </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#fnem').hide();
+            $('#lnem').hide();
+            $('#dobem').hide();
+            $('#emailem').hide();
+            $('#pwdem').hide();
+            $('#cpwdem').hide();
+
+            var error_fn = false;
+            var error_ln = false;
+            var error_dob = false;
+            var error_email = false;
+            var error_pwd = false;
+            var error_cpwd = false;
+
+            $('#fname').focusout(function() {
+                check_fname();
+            });
+            $('#lname').focusout(function() {
+                check_lname();
+            });
+            $('#dob').focusout(function() {
+                check_dob();
+            });
+            $("#exampleInputEmail1").focusout(function() {
+                check_email();
+            });
+            $("#exampleInputPassword1").focusout(function() {
+                check_password();
+            });
+            $('#cpwd').focusout(function() {
+                check_cpwd();
+            });
+
+            function check_fname() {
+                var pattern = /^[a-zA-Z]*$/;
+                var fname = $("#fname").val();
+                if (pattern.test(fname) && fname !== '') {
+                    $("#fnem").hide();
+                } else {
+                    $("#fnem").html("Should contain only Characters");
+                    $("#fnem").show();
+                    error_fn = true;
+                }
+            }
+
+            function check_lname() {
+                var pattern = /^[a-zA-Z]*$/;
+                var lname = $('#lname').val();
+                if (pattern.test(lname) && lname !== '') {
+                    $('#lnem').hide();
+                } else {
+                    $('#lnem').html("Should contain only Characters");
+                    $('#lnem').show();
+                    error_ln = true;
+                }
+            }
+
+            function check_dob() {
+                var dob = $('#dob').val();
+                if (dob <= 2010 - 12 - 31) {
+                    $('#dobem').hide();
+                } else {
+                    $('#dobem').html("Person must be born before 2011 to get registered");
+                    $('#dobem').show();
+                    error_dob = true;
+                }
+            }
+
+            function check_email() {
+                var pattern = /^([\w-\.]+@+([\w-]+\.)+[\w-]{2,4})?$/;
+                var em = $('exampleInputEmail1').val();
+                if (pattern.test(em) && em !== '') {
+                    $('#emailem').hide();
+                } else {
+                    $('#emailem').html('Enter a valid email address.');
+                    $('#emailem').show();
+                    error_email = true;
+                }
+            }
+
+            function check_password() {
+                var pass = $('#exampleInputPassword1').val();
+                if (pass.length < 8) {
+                    $('#pwdem').html("Password must be atleast 8 characters long");
+                    $('#pwdem').show();
+                    error_pwd = true;
+                } else {
+                    var pattern = /^[a-zA-Z0-9@_]*$/;
+                    if (pattern.test(pass) && pass !== '') {
+                        $('#pwdem').hide();
+                    } else {
+                        $('#pwdem').html("Password can contain only @,_,alphabets and digits.");
+                        $('#pwdem').show();
+                        error_pwd = true;
+                    }
+                }
+            }
+
+            function check_cpwd() {
+                var pass = $('#exampleInputPassword1').val();
+                var pass2 = $('#cpwd').val();
+                if (pass != pass2) {
+                    $('#cpwdem').html("Passwords must be same!");
+                    $('#cpwdem').show();
+                    error_cpwd = true;
+                } else {
+                    $('#cpwdem').hide();
+                }
+            }
+
+            $('#signupform').submit(function() {
+                error_fn = false;
+                error_ln = false;
+                error_dob = false;
+                error_email = false;
+                error_pwd = false;
+                error_cpwd = false;
+
+                check_fname();
+                check_lname();
+                check_dob();
+                check_email();
+                check_password();
+                check_cpwd();
+                if (error_fn == false && error_ln == false && error_dob == false && error_email == false && error_pwd == false && error_cpwd == false) {
+                    return true;
+                } else {
+                    alert("Please fill the form correctly!");
+                    return false;
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
