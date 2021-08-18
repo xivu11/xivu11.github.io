@@ -7,44 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
-    <script>
-        jQuery.validator.addMethod("nospace", function(value, element) {
-            return value.trim().length != 0;
-        }, "No Spaces allowed!");
-        jQuery.validator.addMethod("passlen", function(value, element) {
-            return value.length >= 6;
-        }, "Password must contain atleast 6 characters.");
-        var $form = $('#login');
-        if ($form.length) {
-            $form.validate({
-                rules: {
-                    exampleInputEmail1: {
-                        required: true,
-                        nospace: true,
-                        email: true
-                    },
-                    exampleInputPassword1: {
-                        required: true,
-                        nospace: true,
-                        passlen: true
-                    }
-                },
-                messages: {
-                    exampleInputEmail1: {
-                        required: 'Email is required!',
-                        email: 'Please enter a valid email!'
-                    },
-                    exampleInputPassword1: {
-                        required: 'Password is required!'
-                    }
-                },
-                errorPlacement: function(error, element) {
-                    error.insertAfter(element);
-                }
-            });
-        }
-    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
