@@ -9,17 +9,19 @@
 </head>
 
 <body>
-    <form action="submitMessage.html" id="loginform" onsubmit="return validate()">
+    <form id="loginform">
         <div class="card container w-25 mt-5">
             <h5 class="card-header">Login</h5>
             <div class="card-body">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address :</label>
                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <span class="error_form" id="email_em"></span>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password :</label>
                     <input type="password" class="form-control" id="exampleInputPassword1">
+                    <span class="error_form" id="pass_em"></span>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Submit</button>
             </div>
@@ -33,32 +35,58 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
-        jQuery.validator.addMethod("noSpace", function(value, element) {
-            return value == '' || value.trim().length != 0;
-        }, "No space please and don't leave it empty");
-        jQuery.validator.addMethod("plen", function(value, element) {
-            return value.trim().length >= 6;
-        }, "Password must be atleast 6 characters long.");
-        var $regform = $('#loginform');
-        if ($regform.length) {
-            $regform.validate({
-                rules: {
-                    exampleInputEmail1: {
-                        noSpace: true,
-                        email: true
-                    },
-                    exampleInputPassword1: {
-                        noSpace: true,
-                        plen: true
-                    }
-                },
-                messages: {
-                    exampleInputEmail1: {
-                        email: 'Please enter a valid email!'
-                    }
+        $(function() {
+            $('#email_em').hide();
+            $('#pass_em').hide();
+            var error_email = false;
+            var error_password = false;
+
+            $("#exampleInputEmail1").focusout(function() {
+                check_email();
+            });
+            $("#exampleInputPassword1").focusout(function() {
+                check_password();
+            });
+
+            function check_password() {
+                var password_length = $("#exampleInputPassword1").val().length;
+                if (password_length < 8) {
+                    $("#pass_em").html("Atleast 8 Characters");
+                    $("#pass_em").show();
+                    error_password = true;
+                } else {
+                    $("#pass_em").hide();
+                }
+            }
+
+            function check_email() {
+                var pattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                var email = $("#exampleInputEmail1").val();
+                if (pattern.test(email) && email !== '') {
+                    $("#email_error_message").hide();
+                } else {
+                    $("#email_em").html("Invalid Email");
+                    $("#email_em").show();
+                    error_email = true;
+                }
+            }
+
+            $("#loginform").submit(function() {
+                error_password = false;
+                error_email = false;
+
+                check_email();
+                check_password();
+
+                if (error_email == false && error_password == false) {
+                    alert("Logged in successfully!");
+                    return true;
+                } else {
+                    alert("Please fill the form correctly!");
+                    return false;
                 }
             });
-        }
+        });
     </script>
 </body>
 
