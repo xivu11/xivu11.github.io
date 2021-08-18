@@ -114,7 +114,7 @@
 
             function check_dob() {
                 var dob = $('#dob').val();
-                if (dob <= 31 - 12 - 2010) {
+                if (dob.getFullYear() <= 2010) {
                     $('#dobem').hide();
                 } else {
                     $('#dobem').html("Person must be born before 2011 to get registered");
